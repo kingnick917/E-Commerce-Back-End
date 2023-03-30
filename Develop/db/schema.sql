@@ -1,0 +1,10 @@
+-- DROP DATABASE
+DROP DATABASE IF EXISTS ecommerce_db;
+
+-- CREATE DATABASE
+CREATE DATABASE ecommerce_db;
+
+CREATE TABLE needs(
+  username VARCHAR(30) NOT NULL,
+  password VARCHAR(30) NOT NULL,
+);
