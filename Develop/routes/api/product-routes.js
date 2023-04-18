@@ -79,9 +79,6 @@ router.put('/:id', (req, res) => {
  const productag = Product.update(req.body, {
     where: {
       id: req.params.id,
-      price: 200.00,
-      stock: 3,
-      tagIds: [1, 2, 3, 4]
     },
   })
     .then((productag) => {
@@ -113,13 +110,30 @@ router.put('/:id', (req, res) => {
     })
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
-      // console.log(err);
+      console.log(err);
       res.status(400).json(err);
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
+  try {
+    const ProductData = await Product.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+
+    if (!ProductData) {
+      res.status(404).json({ message: 'No location found with this id!' });
+      return;
+    }
+
+    res.status(200).json(ProductData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
+
 
 module.exports = router;
